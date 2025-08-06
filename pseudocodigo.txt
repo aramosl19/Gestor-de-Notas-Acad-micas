@@ -1,1 +1,42 @@
-INICIO
+Inicio	
+    Definir op Como Entero
+    op <- 0
+	
+    Mientras op <> 5 Hacer
+        Imprimir ""
+        Imprimir "----- Menú Gestor de Notas Académicas - UAM -----"
+        Imprimir "1. Registrar un nuevo curso y nota"
+        Imprimir "2. Mostrar todas las notas"
+        Imprimir "3. Modificar la nota de un curso"
+        Imprimir "4. Eliminar un curso y su nota"
+        Imprimir "5. Salir del sistema"
+        Imprimir "Seleccione una opción: "
+        Leer op
+		
+        Si op = 1 Entonces
+            Imprimir "<Registrar un nuevo curso y nota>"
+            // <acción>
+        Sino
+            Si op = 2 Entonces
+                Imprimir "<Mostrar todas las notas>"
+                // <acción>
+            Sino
+                Si op = 3 Entonces
+                    Imprimir "<Modificar la nota de un curso>"
+                    // <acción>
+                Sino
+                    Si op = 4 Entonces
+                        Imprimir "<Eliminar un curso y su nota>"
+                        // <acción>
+                    Sino
+                        Si op = 5 Entonces
+                            Imprimir "Saliendo del sistema..."
+                        Sino
+                            Imprimir "Opción inválida, intente nuevamente."
+                        FinSi
+                    FinSi
+                FinSi
+            FinSi
+        FinSi
+    FinMientras
+Fin
