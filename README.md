@@ -10,24 +10,15 @@ Este sistema cumple la necesidad de no tener que realizar muchos movimientos par
 
 #Requisitos Del Sistema
 
-Requisitos Funcionales
-
+Requisitos Funcionales.
 Capacidad de registrar cursos y notas.
-
 Capacidad de mostrar todas las notas.
-
 Capacidad de modificar notas de un curso.
-
 Capacidad de eliminar cursos y notas.
-
 Capacidad de salir del sistema con un numero.
 
-Requisitos No Funcionales
-
+Requisitos No Funcionales.
 El sistema debe ejecutarse en consola.
-
 Se debe desarrollar en Python sin librerias externas.
-
 Debe usar bucles (while) y condiciones (if).
-
 El diseño se debe presentar en un pseudocodigo.
