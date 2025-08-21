@@ -1,0 +1,48 @@
+//avance_proyecto_02_pseudocodigo
+//Este algoritmo busca registrar varias notas y calcular su promedio
+//Allan Stiven Ramos López
+//avance_proyecto_02_pseudocodigo.txt
+//Carné 7590-25-10622
+
+
+//Creamos una funcion para poder manejar el promedio individual por medio de una abreviacion.
+Funcion prom <- promedionotas(n1,n2,n3)
+	Definir prom Como Real
+	prom <- (n1+n2+n3)/3 //Aqui aclaramos que hace la funcion para que tenga coherencia para la computadora.
+FinFuncion
+
+
+//Aqui creamos un subproceso para abreviar los tres leer de cada nota
+//para que el usuario las ingrese hacer esto nos ayudara mas adelante.
+SubProceso leernotas(n1 Por Referencia, n2 Por Referencia, n3 Por Referencia)
+	Repetir //Aqui aclaramos que se tiene que repetir hasta que el numero que se ingrese sea mayor o igual a 0 o tambien menor o igual a 100.
+		Escribir "Ingrese nota 1 (0..100): "
+		Leer n1
+	Hasta Que n1 >= 0 Y n1 <= 100
+	Repetir
+		Escribir "Ingrese nota 2 (0 a 100): "
+		leer n2
+	Hasta Que n2 >= 0 Y n2 <=100
+	Repetir
+		Escribir "Ingrese nota 3 (0 a 100): "
+		leer n3
+	Hasta Que n3 >= 0 Y n3 <=100
+FinSubProceso
+
+
+//Aqui comenzamos a realizar el algoritmo para que cada funcion y subproceso cobre vida.
+Algoritmo Ganando
+	//Aqui definimos las variables como entero y real.
+	Definir promindi Como Real
+	Definir n, i Como Entero
+	Definir n1, n2, n3 Como Entero
+	//Aqui pedimos la cantidad de alumnos que participaran.
+	Escribir "Ingrese la cantidad de alumnos"
+	Leer n
+	//Este para es un bucle que funcionara como un hasta que i tenga el mismo valor de n va a repetir este proceso.
+	Para i <- 1 Hasta n Hacer
+		leernotas(n1,n2,n3)
+		promindi <- promedionotas(n1,n2,n3)
+			Escribir "estudiante ", i , " promedio: ", promindi //aqui imprimimos la informacion que vera el usuario al ejecutar el programa.
+	FinPara
+FinAlgoritmo
