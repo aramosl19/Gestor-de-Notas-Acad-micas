@@ -10,18 +10,18 @@ El objetivo principal es que cualquier persona pueda tener un sistema sencillo q
 ## Requisitos del Sistema
 
 ### Requisitos Funcionales
-- Registrar cursos y notas.  
-- Mostrar todas las notas.  
-- Modificar notas de un curso.  
-- Eliminar cursos y notas.  
-- Salir del sistema con un número.  
+Registrar cursos y notas.  
+Mostrar todas las notas.  
+Modificar notas de un curso.  
+Eliminar cursos y notas.  
+Salir del sistema con un número.  
 
 ### Requisitos No Funcionales
-- El sistema debe ejecutarse en consola.  
-- Debe estar desarrollado en Python sin librerías externas.  
-- Se deben usar bucles (while) y condiciones (if).  
-- El menú debe ser claro y entendible.  
-- El código debe ser fácil de leer.  
+El sistema debe ejecutarse en consola.  
+Debe estar desarrollado en Python sin librerías externas.  
+Se deben usar bucles (while) y condiciones (if).  
+El menú debe ser claro y entendible.  
+El código debe ser fácil de leer.  
 
 ## Ejecución
 Para ejecutar el programa se usa la terminal. 
