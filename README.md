@@ -1,28 +1,27 @@
-__#Gestor De Notas Academicas__
+# Gestor De Notas Académicas
 
-__##Redacción Del Problema__
+## Redacción del Problema
+El Gestor de Notas Académicas se hizo con la idea de poder registrar, consultar, modificar y eliminar notas de los cursos.  
+El programa funciona con un menú fácil de usar y pensado para que tanto estudiantes como docentes puedan manejar calificaciones sin necesidad de usar una base de datos.
 
-El sistema Gestor-De-Notas-Academicas tiene por objetivo ofrecer la posibilidad de registrar consultar modificar y eliminar notas de los cursos. En un menu intuitivo facil de utilizar, siento esta una herramienta bastante simple pero demasiado util para el area de las notas academicas.
+## Objetivo
+El objetivo principal es que cualquier persona pueda tener un sistema sencillo que le permita manejar sus notas de manera clara desde la consola.
 
-Este sistema esta dirigido a quien necesite gestionar calificaciones ya sea un docente o un estudiante buscando que tengan todos la capacidad de utilizar este sistema de una manera muy facil.
+## Requisitos del Sistema
 
-Este sistema cumple la necesidad de no tener que realizar muchos movimientos para encontrar la calificacion necesaria siendo accesible para que el usuario no tenga dificultades cumpliendo con la necesidad de ser claro sensillo intuitivo y lo mas importante poder manejar de manera clara las notas sin tener la necesidad de usar una base de datos.
+### Requisitos Funcionales
+- Registrar cursos y notas.  
+- Mostrar todas las notas.  
+- Modificar notas de un curso.  
+- Eliminar cursos y notas.  
+- Salir del sistema con un número.  
 
+### Requisitos No Funcionales
+- El sistema debe ejecutarse en consola.  
+- Debe estar desarrollado en Python sin librerías externas.  
+- Se deben usar bucles (while) y condiciones (if).  
+- El menú debe ser claro y entendible.  
+- El código debe ser fácil de leer.  
 
-__##Requisitos Del Sistema__
-
-__###Requisitos Funcionales.__
-
-Capacidad de registrar cursos y notas,
-Capacidad de mostrar todas las notas,
-Capacidad de modificar notas de un curso,
-Capacidad de eliminar cursos y notas,
-Capacidad de salir del sistema con un numero,
-
-__###Requisitos No Funcionales.__
-
-El sistema debe ejecutarse en consola,
-Se debe desarrollar en Python sin librerias externas,
-Debe usar bucles (while) y condiciones (if),
-El menu debe ser claro y intuitivo,
-Codigo debe ser facil de leer.
+## Ejecución
+Para ejecutar el programa se usa la terminal. 
