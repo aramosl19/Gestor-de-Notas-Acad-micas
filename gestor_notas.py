@@ -4,11 +4,6 @@
 
 from collections import deque
 
-#funcion auxiliar usada originalmente en versiones previas
-#la mantenemos pero no se usa en este flujo principal
-def promedio_notas(n1):
-    return n1
-
 #lee una nota validando que sea un numero entre 0 y 100
 def leer_nota():
     while True:
@@ -245,3 +240,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
