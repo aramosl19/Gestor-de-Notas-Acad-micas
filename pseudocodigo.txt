@@ -1,5 +1,4 @@
-FUNCIONES
--------------------------------------------------------
+"Funciones"
 
 Funcion leer_nota()
     Repetir
@@ -236,9 +235,7 @@ Funcion mostrar_historial(historial)
 FinFuncion
 
 
--------------------------------------------------------
-PROGRAMA PRINCIPAL
--------------------------------------------------------
+"Programa Principal"
 
 Inicio
     Definir cursos, historial, cola_revision Como Lista
@@ -246,7 +243,7 @@ Inicio
 
     Repetir
         Escribir ""
-        Escribir "-------- GESTOR DE CURSOS Y NOTAS --------"
+        Escribir "Gestor de Cursos"
         Escribir "1. Registrar nuevo curso"
         Escribir "2. Mostrar todos los cursos"
         Escribir "3. Calcular promedio general"
