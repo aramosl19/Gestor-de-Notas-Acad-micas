@@ -1,0 +1,295 @@
+"Funciones"
+
+Funcion leer_nota()
+    Repetir
+        Intentar
+            Escribir "Ingrese la nota obtenida (0 a 100): "
+            Leer nota
+            Si nota >= 0 Y nota <= 100 Entonces
+                Retornar nota
+            FinSi
+        Capturar Error
+            Escribir "Entrada inválida, intente otra vez."
+        FinCapturar
+    Hasta nota válida
+FinFuncion
+
+
+Funcion agregar_curso(lista, historial, cola_revision)
+    Escribir "Ingrese el nombre del curso: "
+    Leer nombre
+    Si nombre = "" Entonces
+        Escribir "El nombre no puede estar vacío"
+        Retornar
+    FinSi
+    nota ← leer_nota()
+    curso ← {nombre, nota}
+    Agregar curso a lista
+    Agregar "Se agregó: " + nombre + " - Nota: " + ConvertirATexto(nota) a historial
+    Encolar nombre en cola_revision
+    Escribir "Curso registrado con éxito"
+FinFuncion
+
+
+Funcion mostrar_cursos(lista)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    Escribir "Cursos registrados:"
+    Para i ← 1 Hasta Longitud(lista)
+        Escribir i, ". ", lista[i].nombre, " - Nota: ", lista[i].nota
+    FinPara
+FinFuncion
+
+
+Funcion calcular_promedio_general(lista)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    suma ← 0
+    Para cada curso En lista
+        suma ← suma + curso.nota
+    FinPara
+    promedio ← suma / Longitud(lista)
+    Escribir "Promedio general: ", promedio
+FinFuncion
+
+
+Funcion contar_aprobados_reprobados(lista)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    aprobados ← 0
+    Para cada curso En lista
+        Si curso.nota >= 60 Entonces
+            aprobados ← aprobados + 1
+        FinSi
+    FinPara
+    reprobados ← Longitud(lista) - aprobados
+    Escribir "Cursos aprobados: ", aprobados
+    Escribir "Cursos reprobados: ", reprobados
+FinFuncion
+
+
+Funcion buscar_curso(lista)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    Escribir "Ingrese el nombre del curso a buscar: "
+    Leer nombre_buscar
+    encontrado ← FALSO
+    Para cada curso En lista
+        Si Minusculas(curso.nombre) Contiene Minusculas(nombre_buscar) Entonces
+            Escribir "Curso encontrado: ", curso.nombre, " - Nota: ", curso.nota
+            encontrado ← VERDADERO
+        FinSi
+    FinPara
+    Si encontrado = FALSO Entonces
+        Escribir "Curso no encontrado"
+    FinSi
+FinFuncion
+
+
+Funcion actualizar_curso(lista, historial)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    Escribir "Ingrese el nombre del curso a actualizar: "
+    Leer nombre
+    Para cada curso En lista
+        Si Minusculas(curso.nombre) = Minusculas(nombre) Entonces
+            nueva_nota ← leer_nota()
+            Agregar "Se actualizó: " + nombre + " - Nota anterior: " + ConvertirATexto(curso.nota) + " -> Nueva: " + ConvertirATexto(nueva_nota) a historial
+            curso.nota ← nueva_nota
+            Escribir "Nota actualizada correctamente"
+            Retornar
+        FinSi
+    FinPara
+    Escribir "Curso no encontrado"
+FinFuncion
+
+
+Funcion eliminar_curso(lista, historial)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    Escribir "Ingrese el curso que desea eliminar: "
+    Leer nombre
+    Para cada curso En lista
+        Si Minusculas(curso.nombre) = Minusculas(nombre) Entonces
+            Escribir "¿Está seguro que desea eliminarlo? (s/n): "
+            Leer confirmacion
+            Si confirmacion = "s" Entonces
+                Eliminar curso de lista
+                Agregar "Se eliminó: " + nombre + " - Nota: " + ConvertirATexto(curso.nota) a historial
+                Escribir "Curso eliminado correctamente"
+            Sino
+                Escribir "Eliminación cancelada"
+            FinSi
+            Retornar
+        FinSi
+    FinPara
+    Escribir "Curso no encontrado"
+FinFuncion
+
+
+Funcion ordenar_burbuja(lista)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    n ← Longitud(lista)
+    Para i ← 0 Hasta n - 2
+        Para j ← 0 Hasta n - 2 - i
+            Si lista[j].nota < lista[j+1].nota Entonces
+                temp ← lista[j]
+                lista[j] ← lista[j+1]
+                lista[j+1] ← temp
+            FinSi
+        FinPara
+    FinPara
+    Escribir "Cursos ordenados por nota (de mayor a menor)"
+FinFuncion
+
+
+Funcion ordenar_insercion(lista)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    Para i ← 1 Hasta Longitud(lista)-1
+        clave ← lista[i]
+        j ← i - 1
+        Mientras j >= 0 Y Minusculas(lista[j].nombre) > Minusculas(clave.nombre)
+            lista[j+1] ← lista[j]
+            j ← j - 1
+        FinMientras
+        lista[j+1] ← clave
+    FinPara
+    Escribir "Cursos ordenados por nombre"
+FinFuncion
+
+
+Funcion busqueda_binaria(lista)
+    Si lista vacía Entonces
+        Escribir "No hay cursos registrados"
+        Retornar
+    FinSi
+    Escribir "Ingrese el nombre del curso a buscar: "
+    Leer nombre_buscar
+    izquierda ← 0
+    derecha ← Longitud(lista) - 1
+    Mientras izquierda <= derecha
+        medio ← Truncar((izquierda + derecha) / 2)
+        Si Minusculas(lista[medio].nombre) = Minusculas(nombre_buscar) Entonces
+            Escribir "Curso encontrado: ", lista[medio].nombre, " - Nota: ", lista[medio].nota
+            Retornar
+        FinSi
+        Si Minusculas(lista[medio].nombre) < Minusculas(nombre_buscar) Entonces
+            izquierda ← medio + 1
+        Sino
+            derecha ← medio - 1
+        FinSi
+    FinMientras
+    Escribir "Curso no encontrado"
+FinFuncion
+
+
+Funcion simular_cola_revision(cola_revision)
+    Escribir "Ingrese los cursos para revisión (escriba 'fin' para terminar):"
+    Repetir
+        Leer curso
+        Si Minusculas(curso) <> "fin" Entonces
+            Encolar curso en cola_revision
+        FinSi
+    Hasta curso = "fin"
+    
+    Si cola_revision vacía Entonces
+        Escribir "No hay solicitudes de revisión"
+        Retornar
+    FinSi
+
+    Escribir "Procesando solicitudes:"
+    Mientras cola_revision No vacía
+        curso_actual ← Desencolar(cola_revision)
+        Escribir "Revisando: ", curso_actual
+    FinMientras
+FinFuncion
+
+
+Funcion mostrar_historial(historial)
+    Si historial vacío Entonces
+        Escribir "Historial vacío"
+        Retornar
+    FinSi
+    Escribir "Historial de cambios recientes:"
+    Para i ← Longitud(historial) Hasta 1 Paso -1
+        Escribir i, ". ", historial[i]
+    FinPara
+FinFuncion
+
+
+"Programa Principal"
+
+Inicio
+    Definir cursos, historial, cola_revision Como Lista
+    Definir opcion Como Entero
+
+    Repetir
+        Escribir ""
+        Escribir "Gestor de Cursos"
+        Escribir "1. Registrar nuevo curso"
+        Escribir "2. Mostrar todos los cursos"
+        Escribir "3. Calcular promedio general"
+        Escribir "4. Contar cursos aprobados y reprobados"
+        Escribir "5. Buscar curso por nombre"
+        Escribir "6. Actualizar nota de un curso"
+        Escribir "7. Eliminar un curso"
+        Escribir "8. Ordenar cursos por nota (burbuja)"
+        Escribir "9. Ordenar cursos por nombre (inserción)"
+        Escribir "10. Buscar curso (búsqueda binaria)"
+        Escribir "11. Simular cola de revisión"
+        Escribir "12. Mostrar historial de cambios"
+        Escribir "13. Salir"
+        Escribir "Seleccione una opción: "
+        Leer opcion
+
+        Segun opcion Hacer
+            Caso 1:
+                agregar_curso(cursos, historial, cola_revision)
+            Caso 2:
+                mostrar_cursos(cursos)
+            Caso 3:
+                calcular_promedio_general(cursos)
+            Caso 4:
+                contar_aprobados_reprobados(cursos)
+            Caso 5:
+                buscar_curso(cursos)
+            Caso 6:
+                actualizar_curso(cursos, historial)
+            Caso 7:
+                eliminar_curso(cursos, historial)
+            Caso 8:
+                ordenar_burbuja(cursos)
+            Caso 9:
+                ordenar_insercion(cursos)
+            Caso 10:
+                busqueda_binaria(cursos)
+            Caso 11:
+                simular_cola_revision(cola_revision)
+            Caso 12:
+                mostrar_historial(historial)
+            Caso 13:
+                Escribir "Saliendo del programa..."
+            De Otro Modo:
+                Escribir "Opción no válida, intente de nuevo."
+        FinSegun
+    Hasta opcion = 13
+
+Fin
