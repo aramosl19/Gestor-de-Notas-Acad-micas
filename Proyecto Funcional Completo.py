@@ -1,248 +1,247 @@
 #Allan Stiven Ramos Lopez
-#Carne: 7590-25-10622
-#Avance de Proyecto 05 - Pila, cola, ordenamientos
+#Carne 7590-25-10622
+#Avance de Proyecto 05 - Pila cola ordenamientos
 
 from collections import deque
 
-#Aqui colocamos todas las funciones que utilizaremos en el programa
+#funcion auxiliar usada originalmente en versiones previas
+#la mantenemos pero no se usa en este flujo principal
+def promedio_notas(n1):
+    return n1
 
-#calculamos el promedio sumando las notas y diviendo en 3
-def promedio_notas(n1, n2, n3):
-    return (n1 + n2 + n3) / 3
+#lee una nota validando que sea un numero entre 0 y 100
+def leer_nota():
+    while True:
+        try:
+            nota = int(input("Ingrese la nota obtenida: "))
+            if 0 <= nota <= 100:
+                return nota
+        except ValueError:
+            #si el usuario ingresa algo que no es numero se repite la solicitud
+            pass
 
-#lee notas para asignarle un valor a las variables n1, n2 y n3
-def leer_notas():
-    while True:
-        n1 = int(input("Ingrese nota 1 (0 a 100): "))
-        if 0 <= n1 <= 100:
-            break
-    while True:
-        n2 = int(input("Ingrese nota 2 (0 a 100): "))
-        if 0 <= n2 <= 100:
-            break
-    while True:
-        n3 = int(input("Ingrese nota 3 (0 a 100): "))
-        if 0 <= n3 <= 100:
-            break
-    return n1, n2, n3
-
-#Esta funcion agrega un alumno con un curso y nos indica que se guardo correctamente
-def agregar_alumno(lista, historial, cola_revision):
-    nombre = input("Ingrese nombre del alumno: ")
-    curso = input("Ingrese curso del alumno: ")
-    n1, n2, n3 = leer_notas()
-    prom = promedio_notas(n1, n2, n3)
-    alumno = {"nombre": nombre, "curso": curso, "notas": [n1, n2, n3], "promedio": prom}
-    lista.append(alumno)
-    historial.append(f"Se agrego al alumno {nombre}")
+#agrega un curso con su nota a la lista y registra la accion en historial y cola de revision
+def agregar_curso(lista, historial, cola_revision):
+    nombre = input("Ingrese el nombre del curso: ")
+    if not nombre.strip():
+        print("El nombre no puede estar vacio")
+        return
+    nota = leer_nota()
+    curso = {"nombre": nombre, "nota": nota}
+    lista.append(curso)
+    historial.append(f"Se agrego: {nombre} - Nota: {nota}")
     cola_revision.append(nombre)
-    print("Alumno agregado correctamente.\n")
+    print("Curso registrado con exito\n")
 
-#Mostramos a los alumnos en una lista
-def mostrar_alumnos(lista):
+#muestra todos los cursos y sus notas si hay cursos registrados
+def mostrar_cursos(lista):
     if not lista:
-        print("No hay alumnos registrados.\n")
+        print("No hay cursos registrados\n")
         return
-    for i, alumno in enumerate(lista, 1):
-        print(f"{i}. {alumno['nombre']} - Curso: {alumno['curso']} - Promedio: {round(alumno['promedio'], 2)}")
-
-#Promedio general
-def calcular_promedio_general(lista):
-    if len(lista) == 0:
-        print ("Error: 0 alumnos registrados.")
-        return
-    
-    suma = 0 
-    for alumno in lista:
-        suma += alumno["promedio"]
-    promedio_general = suma/len(lista)
-    print(f"Promedio general: {promedio_general:.2f}\n")
-
-#Promedio de cada alumno
-def mostrar_promedio_alumno(lista):
-    if len(lista) == 0:
-        print("Error: 0 alumnos registrados.")
-        return
-    
-    print("Promedio de cursos de cada alumno individualmente.")
-    for alumno in lista:
-        print(f"-{alumno['nombre']}: {alumno['promedio']:.2f}")
+    print("Cursos registrados:")
+    for i, curso in enumerate(lista, 1):
+        print(f"{i}. {curso['nombre']} - Nota: {curso['nota']}")
     print("")
 
-#Ordenamiento por busqueda binaria.
-def busqueda_binaria(lista, curso_buscado):
+#calcula el promedio general de todas las notas y lo muestra con dos decimales
+def calcular_promedio_general(lista):
     if not lista:
-        return None
-    
-    izquierda = 0
-    derecha = len(lista) - 1
+        print("No hay cursos registrados\n")
+        return
+    suma = sum(c["nota"] for c in lista)
+    promedio = suma / len(lista)
+    print(f"Promedio general: {promedio:.2f}\n")
 
-    while izquierda <= derecha:
-        medio = (izquierda+derecha)//2
-        curso_actual = lista[medio]["curso"].lower()
-
-        if curso_actual == curso_buscado.lower():
-            return lista[medio]
-        elif curso_actual < curso_buscado.lower():
-            izquierda = medio + 1
-        else:
-            derecha = medio - 1
-    return None
-
-
-#Muestra los promedios de cada alumno y tambien el promedio general.
-def mostrar_todos_promedios(lista):
-    if len(lista) == 0:
-        print("Error: 0 alumnos registrados.")
-
-    suma = 0
-    print("Promedio por alumnos:")
-    for alumno in lista:
-        print(f"{alumno['nombre']}: {alumno['promedio']:.2f} ")
-        suma += alumno["promedio"]
-    promedio_general = suma/len(lista)
-    print(f"\nPromedio general: {promedio_general:.2f}\n")
-
-#Buscamos alumnos de manera lineal
-def buscar_alumno(lista, nombre):
-    for alumno in lista:
-        if alumno["nombre"].lower() == nombre.lower():
-            return alumno
-    return None
-
-#Actualiza notas de un alumno en especifico
-def actualizar_notas(lista, historial):
-    nombre = input("Ingrese el nombre del alumno a actualizar: ")
-    alumno = buscar_alumno(lista, nombre)
-    if alumno:
-        n1, n2, n3 = leer_notas()
-        alumno["notas"] = [n1, n2, n3]
-        alumno["promedio"] = promedio_notas(n1, n2, n3)
-        historial.append(f"Se actualizaron las notas de {nombre}")
-        print("Notas actualizadas correctamente.\n")
-    else:
-        print("Alumno no encontrado.\n")
-
-#Eliminamos un alumno poniendo su nombre
-def eliminar_alumno(lista, historial):
-    nombre = input("Ingrese el nombre del alumno a eliminar: ")
-    alumno = buscar_alumno(lista, nombre)
-    if alumno:
-        lista.remove(alumno)
-        historial.append(f"Se elimino al alumno {nombre}")
-        print("Alumno eliminado correctamente.\n")
-    else:
-        print("Alumno no encontrado.\n")
-
-#Eliminamos el ultimo alumno en entrar (como una pila)
-def eliminar_ultimoalumno(lista, historial):
-    if lista:
-        alumno = lista.pop()
-        historial.append(f"Se elimino al ultimo alumno ingresado: {alumno['nombre']}")
-        print(f"Se elimino correctamente al ultimo alumno: {alumno['nombre']}\n")
-    else:
-        print("No hay alumnos en la lista.\n")
-
-#Mostramos la estadistica de cuantos alumnos aprobados y reprobados tengamos
-def mostrar_estadisticas(lista):
-    aprobados = sum(1 for alumno in lista if alumno["promedio"] >= 61)
+#cuenta cuántos cursos estan aprobados y cuántos reprobados
+#se considera aprobado nota mayor o igual a 60
+def contar_aprobados_reprobados(lista):
+    if not lista:
+        print("No hay cursos registrados\n")
+        return
+    aprobados = sum(1 for c in lista if c["nota"] >= 60)
     reprobados = len(lista) - aprobados
-    print(f"Total de alumnos: {len(lista)}")
-    print(f"Aprobados: {aprobados}")
-    print(f"Reprobados: {reprobados}\n")
+    print(f"Cursos aprobados: {aprobados}")
+    print(f"Cursos reprobados: {reprobados}\n")
 
-#Muestra la ultima accion realizada
-def ver_historial(historial):
-    if historial:
-        print("Ultima accion realizada:", historial.pop())
-    else:
-        print("Historial vacio.\n")
+#busca cursos por coincidencia parcial sin importar mayusculas o minusculas
+def buscar_curso(lista):
+    if not lista:
+        print("No hay cursos registrados\n")
+        return
+    nombre = input("Ingrese el nombre del curso: ").lower()
+    encontrado = False
+    for curso in lista:
+        if nombre in curso["nombre"].lower():
+            print(f"Curso encontrado: {curso['nombre']} - Nota: {curso['nota']}\n")
+            encontrado = True
+    if not encontrado:
+        print("Curso no encontrado\n")
 
-#Atiende a los alumnos en orden de cola de pila
-def atender_revision(cola_revision):
-    if cola_revision:
-        print("Atendiendo revision de:", cola_revision.popleft())
-    else:
-        print("No hay alumnos en cola de revision.\n")
+#actualiza la nota de un curso especifico y registra la accion en el historial
+def actualizar_curso(lista, historial):
+    if not lista:
+        print("No hay cursos registrados\n")
+        return
+    nombre = input("Ingrese el nombre del curso: ")
+    for curso in lista:
+        if curso["nombre"].lower() == nombre.lower():
+            nueva_nota = leer_nota()
+            anterior = curso["nota"]
+            curso["nota"] = nueva_nota
+            historial.append(f"Se actualizo: {nombre} - Nota anterior: {anterior} -> Nueva nota: {nueva_nota}")
+            print("Nota actualizada correctamente\n")
+            return
+    print("Curso no encontrado\n")
 
-#Ordena a los alumnos en burbuja por medio del promedio
+#elimina un curso despues de pedir confirmacion y registra la accion en el historial
+def eliminar_curso(lista, historial):
+    if not lista:
+        print("No hay cursos registrados\n")
+        return
+    nombre = input("Ingrese el curso a eliminar: ")
+    for curso in lista:
+        if curso["nombre"].lower() == nombre.lower():
+            confirm = input("Esta seguro que desea eliminarlo (s/n): ").lower()
+            if confirm == "s":
+                lista.remove(curso)
+                historial.append(f"Se elimino: {nombre} - Nota: {curso['nota']}")
+                print("Curso eliminado correctamente\n")
+            else:
+                print("Eliminacion cancelada\n")
+            return
+    print("Curso no encontrado\n")
+
+#ordena los cursos por nota usando ordenamiento burbuja en orden descendente
 def ordenar_burbuja(lista):
+    if not lista:
+        print("No hay cursos registrados\n")
+        return
     n = len(lista)
     for i in range(n - 1):
         for j in range(n - 1 - i):
-            if lista[j]["promedio"] > lista[j + 1]["promedio"]:
+            if lista[j]["nota"] < lista[j + 1]["nota"]:
                 lista[j], lista[j + 1] = lista[j + 1], lista[j]
-    print("Lista ordenada con burbuja.\n")
+    print("Cursos ordenados por nota:")
+    for i, curso in enumerate(lista, 1):
+        print(f"{i}. {curso['nombre']} - Nota: {curso['nota']}")
+    print("")
 
-#Funcion para ordenar la lista basandose en el metodo de insercion
+#ordena los cursos por nombre usando metodo de insercion y muestra el resultado
 def ordenar_insercion(lista):
+    if not lista:
+        print("No hay cursos registrados\n")
+        return
     for i in range(1, len(lista)):
         clave = lista[i]
         j = i - 1
-        while j >= 0 and lista[j]["promedio"] > clave["promedio"]:
+        while j >= 0 and lista[j]["nombre"].lower() > clave["nombre"].lower():
             lista[j + 1] = lista[j]
             j -= 1
         lista[j + 1] = clave
-    print("Lista ordenada con insercion.\n")
+    print("Cursos ordenados por nombre:")
+    for i, curso in enumerate(lista, 1):
+        print(f"{i}. {curso['nombre']} - Nota: {curso['nota']}")
+    print("")
 
-#Algoritmo donde ejecutamos todas las funciones
+#realiza busqueda binaria por nombre asumiendo que la lista ya esta ordenada por nombre
+def busqueda_binaria(lista):
+    if not lista:
+        print("No hay cursos registrados\n")
+        return
+    nombre = input("Ingrese el nombre del curso a buscar: ").lower()
+    izquierda = 0
+    derecha = len(lista) - 1
+    while izquierda <= derecha:
+        medio = (izquierda + derecha) // 2
+        curso_actual = lista[medio]["nombre"].lower()
+        if curso_actual == nombre:
+            print(f"Curso encontrado: {lista[medio]['nombre']} - Nota: {lista[medio]['nota']}\n")
+            return
+        elif curso_actual < nombre:
+            izquierda = medio + 1
+        else:
+            derecha = medio - 1
+    print("Curso no encontrado\n")
+
+#simula una cola de solicitudes de revision y procesa cada curso en orden de llegada
+def simular_cola_revision(cola_revision):
+    print("Ingrese curso para revision (escriba 'fin' para terminar):")
+    while True:
+        curso = input("> ")
+        if curso.lower() == "fin":
+            break
+        cola_revision.append(curso)
+    if not cola_revision:
+        print("No hay solicitudes para procesar\n")
+        return
+    print("\nProcesando solicitudes:")
+    while cola_revision:
+        print(f"Revisando: {cola_revision.popleft()}")
+    print("")
+
+#muestra el historial de cambios en orden inverso simulando una pila
+def mostrar_historial(historial):
+    if not historial:
+        print("Historial vacio\n")
+        return
+    print("Historial de cambios recientes:")
+    for i, accion in enumerate(reversed(historial), 1):
+        print(f"{i}. {accion}")
+    print("")
+
+#funcion principal que presenta el menu y llama a las demas funciones
 def main():
-    alumnos = []
+    cursos = []
     historial = []
     cola_revision = deque()
 
     while True:
-        print("\nGestor De Notas Academicas")
-        print("1. registrar nuevo curso")
-        print("2. mostrar todos los cursos y notas")
-        print("3. calcular promedio general")
-        print("4. contar cursos aprobados y reprobados")
-        print("5. buscar curso por nombre (busqueda lineal)")
-        print("6. actualizar nota de un curso")
-        print("7. eliminar un curso")
-        print("8. ordenar un curso por nota (ordenamiento burbuja)")
-        print("9. ordenar cursos por nombre (ordenamiento insercion)")
-        print("10. buscar curso por nombre (busqueda binaria)")
-        print("11. simular cola de solicitudes de revision")
-        print("12. mostrar historial de cambios (pila)")
-        print("13. salir")
+        print("\nGestor de Cursos")
+        print("1. Registrar nuevo curso")
+        print("2. Mostrar todos los cursos y notas")
+        print("3. Calcular promedio general")
+        print("4. Contar cursos aprobados y reprobados")
+        print("5. Buscar curso por nombre")
+        print("6. Actualizar nota de un curso")
+        print("7. Eliminar un curso")
+        print("8. Ordenar cursos por nota (burbuja)")
+        print("9. Ordenar cursos por nombre (insercion)")
+        print("10. Buscar curso por nombre (busqueda binaria)")
+        print("11. Simular cola de solicitudes de revision")
+        print("12. Mostrar historial de cambios (pila)")
+        print("13. Salir")
 
         opcion = input("Seleccione una opcion: ")
 
         if opcion == "1":
-            agregar_alumno(alumnos, historial, cola_revision)
+            agregar_curso(cursos, historial, cola_revision)
         elif opcion == "2":
-            mostrar_alumnos(alumnos)
+            mostrar_cursos(cursos)
         elif opcion == "3":
-            mostrar_todos_promedios(alumnos)
+            calcular_promedio_general(cursos)
         elif opcion == "4":
-            mostrar_estadisticas(alumnos)
+            contar_aprobados_reprobados(cursos)
         elif opcion == "5":
-            nombre = input("Ingrese el nombre del alumno a buscar: ")
-            alumno = buscar_alumno(alumnos, nombre)
-            if alumno:
-                print(f"{alumno['nombre']} - Curso: {alumno['curso']} - Promedio: {round(alumno['promedio'], 2)}")
-            else:
-                print("Alumno no encontrado.\n")
+            buscar_curso(cursos)
         elif opcion == "6":
-            actualizar_notas(alumnos, historial)
+            actualizar_curso(cursos, historial)
         elif opcion == "7":
-            eliminar_alumno(alumnos, historial)
+            eliminar_curso(cursos, historial)
         elif opcion == "8":
-            ordenar_burbuja(alumnos)
+            ordenar_burbuja(cursos)
         elif opcion == "9":
-            ordenar_insercion(alumnos)
+            ordenar_insercion(cursos)
         elif opcion == "10":
-            busqueda_binaria(alumnos, nombre)
+            busqueda_binaria(cursos)
         elif opcion == "11":
-            atender_revision(cola_revision)
+            simular_cola_revision(cola_revision)
         elif opcion == "12":
-            ver_historial(historial)
+            mostrar_historial(historial)
         elif opcion == "13":
             print("Saliendo del programa...")
             break
         else:
-            print("Opcion no valida.\n")
+            print("Opcion no valida\n")
 
 if __name__ == "__main__":
     main()
